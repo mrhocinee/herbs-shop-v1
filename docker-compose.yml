@@ -1,0 +1,76 @@
+services:
+  # ─── Next.js Application ────────────────────────────────
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: herbvault-app
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - DATABASE_URL=postgresql://herbvault:herbvault_secret@postgres:5432/herbvault
+      - REDIS_URL=redis://redis:6379
+      - NEXTAUTH_SECRET=change-me-in-production-to-a-random-32-char-string
+      - NEXTAUTH_URL=http://localhost:3000
+    volumes:
+      - uploads:/app/uploads
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    networks:
+      - herbvault
+
+  # ─── PostgreSQL Database ────────────────────────────────
+  postgres:
+    image: postgres:16-alpine
+    container_name: herbvault-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: herbvault
+      POSTGRES_USER: herbvault
+      POSTGRES_PASSWORD: herbvault_secret
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U herbvault -d herbvault"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - herbvault
+
+  # ─── Redis Cache ────────────────────────────────────────
+  redis:
+    image: redis:7-alpine
+    container_name: herbvault-redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    volumes:
+      - redisdata:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    command: redis-server --appendonly yes --maxmemory 256mb --maxmemory-policy allkeys-lru
+    networks:
+      - herbvault
+
+volumes:
+  pgdata:
+    driver: local
+  redisdata:
+    driver: local
+  uploads:
+    driver: local
+
+networks:
+  herbvault:
+    driver: bridge

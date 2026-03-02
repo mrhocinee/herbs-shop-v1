@@ -1,0 +1,206 @@
+@import "tailwindcss";
+
+/* ─── Jade Night Apothecary — Light Direction ────────────── */
+/* Warm cream base. Natural sage + warm brown accents.        */
+/* Aesop / Apple Store / modern wellness aesthetic.           */
+
+:root {
+  /* Background layers — warm cream palette */
+  --bg-base: #FAF8F4;
+  --bg-raised: #FFFFFF;
+  --bg-card: #FFFFFF;
+  --bg-card-hover: #F7F5F0;
+  --bg-elevated: #F0EDE6;
+  --bg-overlay: rgba(0, 0, 0, 0.40);
+
+  /* Sage green accent */
+  --jade: #4A7C59;
+  --jade-muted: rgba(74, 124, 89, 0.08);
+  --jade-hover: #3D6A4B;
+  --jade-glow: 0 0 20px rgba(74, 124, 89, 0.15);
+  --jade-light: #EDF4EF;
+
+  /* Warm brown accent */
+  --gold: #8B7355;
+  --gold-muted: rgba(139, 115, 85, 0.08);
+  --gold-hover: #7A644A;
+
+  /* Semantic */
+  --error: #D64545;
+  --error-muted: rgba(214, 69, 69, 0.08);
+  --warning: #C08B2C;
+  --warning-muted: rgba(192, 139, 44, 0.08);
+  --info: #4A7C9B;
+  --info-muted: rgba(74, 124, 155, 0.08);
+
+  /* Text */
+  --text-primary: #2C2418;
+  --text-secondary: #6B5E4F;
+  --text-muted: #A69B8C;
+
+  /* Borders */
+  --border-subtle: rgba(0, 0, 0, 0.05);
+  --border-default: rgba(0, 0, 0, 0.10);
+  --border-hover: rgba(0, 0, 0, 0.18);
+
+  /* Layout */
+  --sidebar-width: 280px;
+  --cartbar-height: 64px;
+
+  /* Shadows */
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.04), 0 1px 2px rgba(0, 0, 0, 0.03);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.06), 0 2px 4px rgba(0, 0, 0, 0.04);
+  --shadow-lg: 0 12px 32px rgba(0, 0, 0, 0.08), 0 4px 8px rgba(0, 0, 0, 0.04);
+}
+
+/* ─── Base ────────────────────────────────────────────────── */
+
+html {
+  color-scheme: light;
+}
+
+body {
+  background-color: var(--bg-base);
+  color: var(--text-primary);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ─── Scrollbar ──────────────────────────────────────────── */
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.12);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.22);
+}
+
+/* ─── Selection ──────────────────────────────────────────── */
+
+::selection {
+  background: rgba(74, 124, 89, 0.20);
+  color: var(--text-primary);
+}
+
+/* ─── Focus ──────────────────────────────────────────────── */
+
+*:focus-visible {
+  outline: 2px solid var(--jade);
+  outline-offset: 2px;
+}
+
+/* ─── Animations ─────────────────────────────────────────── */
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.animate-shimmer {
+  background: linear-gradient(90deg,
+      rgba(74, 124, 89, 0.02) 0%,
+      rgba(74, 124, 89, 0.06) 50%,
+      rgba(74, 124, 89, 0.02) 100%);
+  background-size: 200% 100%;
+  animation: shimmer 2s ease-in-out infinite;
+}
+
+@keyframes glow-pulse {
+
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(74, 124, 89, 0.05);
+  }
+
+  50% {
+    box-shadow: 0 0 0 6px rgba(74, 124, 89, 0.08);
+  }
+}
+
+.animate-glow {
+  animation: glow-pulse 2s ease-in-out infinite;
+}
+
+@keyframes jade-ring {
+  0% {
+    box-shadow: 0 0 0 0 rgba(74, 124, 89, 0.3);
+  }
+
+  100% {
+    box-shadow: 0 0 0 10px rgba(74, 124, 89, 0);
+  }
+}
+
+.animate-jade-ring {
+  animation: jade-ring 0.4s ease-out;
+}
+
+@keyframes float {
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-4px);
+  }
+}
+
+.animate-float {
+  animation: float 4s ease-in-out infinite;
+}
+
+/* ─── Cards ──────────────────────────────────────────────── */
+
+.card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: 1rem;
+  box-shadow: var(--shadow-sm);
+  transition: box-shadow 0.2s, border-color 0.2s;
+}
+
+.card:hover {
+  box-shadow: var(--shadow-md);
+  border-color: var(--border-hover);
+}
+
+/* ─── Glass (for overlays) ───────────────────────────────── */
+
+.glass {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--border-subtle);
+}
+
+/* ─── Sidebar offset ─────────────────────────────────────── */
+
+@media (min-width: 768px) {
+  main {
+    margin-inline-start: var(--sidebar-width);
+    transition: margin-inline-start 0.3s ease;
+  }
+}
+
+/* ─── View transitions ───────────────────────────────────── */
+
+@view-transition {
+  navigation: auto;
+}
