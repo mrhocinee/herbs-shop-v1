@@ -14,7 +14,7 @@ export default function AdminLogin({ locale, onSuccess }: { locale: string, onSu
     useEffect(() => {
         const stored = sessionStorage.getItem("hv-admin-auth");
         if (stored === "true") {
-            router.replace(`/${locale}/admin/dashboard`);
+            router.replace(`/${locale}/admin`);
         }
     }, [locale, router]);
 
@@ -23,7 +23,7 @@ export default function AdminLogin({ locale, onSuccess }: { locale: string, onSu
         if (pin === ADMIN_PIN) {
             sessionStorage.setItem("hv-admin-auth", "true");
             if (onSuccess) onSuccess();
-            router.replace(`/${locale}/admin/dashboard`);
+            router.replace(`/${locale}/admin`);
         } else {
             setError(true);
             setShake(true);

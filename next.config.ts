@@ -14,6 +14,11 @@ const nextConfig: NextConfig = {
         destination: '/fr/admin',
         permanent: true,
       },
+      {
+        source: '/:locale/admin/dashboard',
+        destination: '/:locale/admin',
+        permanent: true,
+      },
     ];
   },
 };
