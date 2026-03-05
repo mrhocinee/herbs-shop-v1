@@ -25,7 +25,7 @@ function getLocale(request: NextRequest): string {
     return defaultLocale;
 }
 
-export function middleware(request: NextRequest) {
+export default function proxy(request: NextRequest) {
     const { pathname } = request.nextUrl;
 
     // Skip API routes, static files, and Next.js internals
